@@ -1,11 +1,41 @@
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, StatusBar as SB } from 'react-native';
+import * as Font from 'expo-font';
+import GetStarted from './screens/GetStarted';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Button from './components/Button';
+import Home from './screens/Home';
 
 export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  useEffect(() => {
+    async function getFonts() {
+      try {
+        // Pre-load fonts
+        await Font.loadAsync({
+          'Poppins-regular': require('./assets/fonts/Poppins-regular.ttf'),
+          'Poppins-medium': require('./assets/fonts/Poppins-medium.ttf'),
+          'Poppins-bold': require('./assets/fonts/Poppins-bold.ttf'),
+        });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setFontsLoaded(true);
+      }
+    }
+    getFonts();
+  }, []);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View className='flex-1 bg-darkBlue' style={styles.container}>
+      {/* <GetStarted /> */}
+      <Home />
+      <StatusBar style='light' />
     </View>
   );
 }
@@ -13,8 +43,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 20,
+    paddingTop: SB.currentHeight,
   },
 });
