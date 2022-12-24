@@ -7,10 +7,10 @@ import Icon from '../Svgs/Icon';
 const GetStarted = () => {
   return (
     <View className='flex-[1] items-center justify-center space-y-14'>
-      <View className='w-full flex-row justify-center'>
+      <View className='flex-row justify-center w-full'>
         <Icon width={200} height={200} />
       </View>
-      <View className='w-full justify-center px-8 my-5'>
+      <View className='justify-center w-full px-8 my-5'>
         <Text fontWeight='medium' _className='text-2xl text-center mb-4'>
           Discover the Weather in Your City
         </Text>

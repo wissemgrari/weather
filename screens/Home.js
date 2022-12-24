@@ -1,13 +1,32 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView, TextInput, TouchableOpacity, View } from 'react-native';
 import Text from '../components/Text';
 import Cloudy from '../Svgs/Cloudy';
 import Rainy from '../Svgs/Rainy';
-import { Entypo } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 
-const Home = () => {
+const Home = ({ data }) => {
   return (
-    <View className='flex-[1] px-2 py-10'>
+    <ScrollView
+      keyboardShouldPersistTaps='handled'
+      contentContainerStyle={{
+        flexGrow: 1,
+        justifyContent: 'center',
+        width: '100%',
+        paddingVertical: 20,
+      }}
+    >
+      <View className='flex-row items-center justify-between px-4 py-3 mb-10 rounded-full bg-lightBlue'>
+        <TextInput
+          className='w-[90%] text-xl text-[#ADCAEB]'
+          placeholder='Search...'
+          placeholderTextColor='#ADCAEB'
+          cursorColor='#ADCAEB'
+        />
+        <TouchableOpacity>
+          <Feather name='search' size={34} color='#ADCAEB' />
+        </TouchableOpacity>
+      </View>
       <View className='flex-row'>
         <Entypo name='location-pin' size={32} color='white' />
         <Text fontWeight='medium' _className='text-3xl'>
@@ -53,7 +72,7 @@ const Home = () => {
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

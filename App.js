@@ -1,13 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { View, StyleSheet, StatusBar as SB } from 'react-native';
 import * as Font from 'expo-font';
 import GetStarted from './screens/GetStarted';
 import { StatusBar } from 'expo-status-bar';
 import Button from './components/Button';
 import Home from './screens/Home';
+import { API_URL, API_KEY, API_HOST } from '@env';
+import Search from './components/Search';
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [data, setData] = useState(null);
+
+  const options = {
+    method: 'GET',
+    url: API_URL,
+    params: { location: 'Gafsa', format: 'json', u: 'c' },
+    headers: {
+      'X-RapidAPI-Key': API_KEY,
+      'X-RapidAPI-Host': API_HOST,
+    },
+  };
+  const fetchWeather = () => {
+    axios
+      .request(options)
+      .then(function (response) {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
 
   useEffect(() => {
     async function getFonts() {
@@ -25,6 +50,7 @@ export default function App() {
       }
     }
     getFonts();
+    // fetchWeather();
   }, []);
 
   if (!fontsLoaded) {
@@ -33,8 +59,9 @@ export default function App() {
 
   return (
     <View className='flex-1 bg-darkBlue' style={styles.container}>
+      <Search />
       {/* <GetStarted /> */}
-      <Home />
+      {/* <Home data={data} /> */}
       <StatusBar style='light' />
     </View>
   );
